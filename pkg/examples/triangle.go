@@ -12,5 +12,7 @@ func main() {
 		Title:  "Triangle",
 	}
 
-	vgo.Setup()
+	vgo.Setup(func() {
+		fmt.Println("PASSED CODE RAN")
+	})
 }

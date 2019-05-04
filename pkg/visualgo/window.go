@@ -10,7 +10,7 @@ import (
 	"github.com/go-gl/glfw/v3.2/glfw"
 )
 
-func (w *WindowConfig) Setup() {
+func (w *WindowConfig) Setup(f func()) {
 	runtime.LockOSThread()
 
 	// Initialize GLFW Library
@@ -40,6 +40,9 @@ func (w *WindowConfig) Setup() {
 
 	program := gl.CreateProgram() // initializes program reference to store our shaders
 	gl.LinkProgram(program)       // link program to window
+
+	// Run setup code passed by user
+	f()
 
 	for !window.ShouldClose() {
 		// LOOP CODE HERE
