@@ -10,7 +10,7 @@ import (
 	"github.com/go-gl/glfw/v3.2/glfw"
 )
 
-func (w *WindowConfig) Create() {
+func (w *WindowConfig) Setup() {
 	runtime.LockOSThread()
 
 	// Initialize GLFW Library
@@ -49,10 +49,9 @@ func (w *WindowConfig) Create() {
 		glfw.PollEvents()
 		window.SwapBuffers()
 	}
-
 }
 
-// func (config *WindowConfig) Render(w *glfw.Window, prog uint32) {
+// func Render(w *glfw.Window, prog uint32) {
 // 	for !w.ShouldClose() {
 // 		gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 // 		gl.UseProgram(prog)
@@ -60,4 +59,4 @@ func (w *WindowConfig) Create() {
 // 		glfw.PollEvents()
 // 		w.SwapBuffers()
 // 	}
-//}
+// }
