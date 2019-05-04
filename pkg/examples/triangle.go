@@ -12,7 +12,12 @@ func main() {
 		Title:  "Triangle",
 	}
 
-	vgo.Setup(func() {
-		fmt.Println("PASSED CODE RAN")
-	})
+	setup := func() {
+		fmt.Println("Visual Go Triangle Example")
+	}
+
+	draw := func() {
+		fmt.Println("Draw Stuff Here")
+	}
+	vgo.Init(setup, draw)
 }

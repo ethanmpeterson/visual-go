@@ -10,7 +10,9 @@ import (
 	"github.com/go-gl/glfw/v3.2/glfw"
 )
 
-func (w *WindowConfig) Setup(f func()) {
+var loopCode func() = nil
+
+func (w *WindowConfig) Init(setup func(), loop func()) {
 	runtime.LockOSThread()
 
 	// Initialize GLFW Library
@@ -42,17 +44,28 @@ func (w *WindowConfig) Setup(f func()) {
 	gl.LinkProgram(program)       // link program to window
 
 	// Run setup code passed by user
-	f()
+	if setup != nil {
+		setup()
+	}
 
 	for !window.ShouldClose() {
 		// LOOP CODE HERE
 		gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 		gl.UseProgram(program)
 
+		if loop != nil {
+			loop()
+		}
+		//loopCode()
 		glfw.PollEvents()
 		window.SwapBuffers()
 	}
 }
+
+// func (w *WindowConfig) Loop(f func()) {
+// 	loopCode = f
+// 	fmt.Println("LOOP PASS THRU")
+// }
 
 // func Render(w *glfw.Window, prog uint32) {
 // 	for !w.ShouldClose() {
