@@ -56,19 +56,6 @@ func (w *WindowConfig) Init(setup func(), loop func()) {
 	gl.AttachShader(program, fragmentShader)
 	gl.LinkProgram(program) // link program to window
 
-	// Make Vertex Array Object from vertices in draw.go
-	var vbo uint32
-	gl.GenBuffers(1, &vbo)
-	gl.BindBuffer(gl.ARRAY_BUFFER, vbo)
-	gl.BufferData(gl.ARRAY_BUFFER, 4*len(vertexList), gl.Ptr(vertexList), gl.STATIC_DRAW)
-
-	var vao uint32
-	gl.GenVertexArrays(1, &vao)
-	gl.BindVertexArray(vao)
-	gl.EnableVertexAttribArray(0)
-	gl.BindBuffer(gl.ARRAY_BUFFER, vbo)
-	gl.VertexAttribPointer(0, 3, gl.FLOAT, false, 0, nil)
-
 	// Run setup code passed by user
 	if setup != nil {
 		setup()
@@ -79,13 +66,16 @@ func (w *WindowConfig) Init(setup func(), loop func()) {
 		gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
 		gl.UseProgram(program)
 
-		// Triangle Test
-		gl.BindVertexArray(vao)
-		gl.DrawArrays(gl.TRIANGLES, 0, int32(len(vertexList)/3))
-
 		if loop != nil {
 			loop()
 		}
+
+		// Make New Vertex Array Object here
+
+		// Clear stored vertices so the slice can be refilled with objects to be drawn in the next frame
+		gl.BindVertexArray(makeVertexArrayObj())
+		gl.DrawArrays(gl.TRIANGLES, 0, int32(len(vertexList)/3))
+		vertexList = nil
 
 		glfw.PollEvents()
 		window.SwapBuffers()
@@ -114,4 +104,21 @@ func compileShader(source string, shaderType uint32) (uint32, error) {
 	}
 
 	return shader, nil
+}
+
+func makeVertexArrayObj() uint32 {
+	// Make Vertex Array Object from vertices in draw.go
+	var vbo uint32
+	gl.GenBuffers(1, &vbo)
+	gl.BindBuffer(gl.ARRAY_BUFFER, vbo)
+	gl.BufferData(gl.ARRAY_BUFFER, 4*len(vertexList), gl.Ptr(vertexList), gl.STATIC_DRAW)
+
+	var vao uint32
+	gl.GenVertexArrays(1, &vao)
+	gl.BindVertexArray(vao)
+	gl.EnableVertexAttribArray(0)
+	gl.BindBuffer(gl.ARRAY_BUFFER, vbo)
+	gl.VertexAttribPointer(0, 3, gl.FLOAT, false, 0, nil)
+
+	return vao
 }
