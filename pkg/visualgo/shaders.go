@@ -2,7 +2,7 @@ package visualgo
 
 // Fragment and Vertex Shader Code
 // They map each pixel to the same color.
-const VertexShaderSource = `
+const vertexSource = `
 		#version 410
 		in vec3 vp;
 		void main() {
@@ -10,7 +10,7 @@ const VertexShaderSource = `
 		}
 	` + "\x00"
 
-const FragmentShaderSource = `
+const fragmentSource = `
 		#version 410
 		out vec4 frag_colour;
 		void main() {

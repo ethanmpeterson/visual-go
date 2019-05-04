@@ -17,7 +17,7 @@ func main() {
 	}
 
 	draw := func() {
-		fmt.Println("Draw Stuff Here")
+		//fmt.Println("Draw Stuff Here")
 	}
 	vgo.Init(setup, draw)
 }
