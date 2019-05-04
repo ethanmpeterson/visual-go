@@ -10,7 +10,7 @@ import (
 	"github.com/go-gl/glfw/v3.2/glfw"
 )
 
-func (w *WindowConfig) CreateWindow() *glfw.Window {
+func (w *WindowConfig) Create() {
 	runtime.LockOSThread()
 
 	// Initialize GLFW Library
@@ -25,6 +25,8 @@ func (w *WindowConfig) CreateWindow() *glfw.Window {
 		panic(err)
 	}
 
+	glfw.WindowHint(glfw.Resizable, glfw.False)
+
 	window.MakeContextCurrent()
 
 	// Initialize OpenGL
@@ -32,11 +34,30 @@ func (w *WindowConfig) CreateWindow() *glfw.Window {
 	if err := gl.Init(); err != nil {
 		panic(err)
 	}
+
 	version := gl.GoStr(gl.GetString(gl.VERSION))
 	fmt.Println(version)
 
 	program := gl.CreateProgram() // initializes program reference to store our shaders
 	gl.LinkProgram(program)       // link program to window
 
-	return window
+	for !window.ShouldClose() {
+		// LOOP CODE HERE
+		gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+		gl.UseProgram(program)
+
+		glfw.PollEvents()
+		window.SwapBuffers()
+	}
+
 }
+
+// func (config *WindowConfig) Render(w *glfw.Window, prog uint32) {
+// 	for !w.ShouldClose() {
+// 		gl.Clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+// 		gl.UseProgram(prog)
+
+// 		glfw.PollEvents()
+// 		w.SwapBuffers()
+// 	}
+//}

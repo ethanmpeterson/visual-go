@@ -12,5 +12,6 @@ func main() {
 		Title:  "Triangle",
 	}
 
-	vgo.CreateWindow()
+	vgo.Create()
+	//vgo.Render(window, program)
 }
