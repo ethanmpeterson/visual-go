@@ -26,4 +26,10 @@ func (w *WindowConfig) CreateWindow() {
 	//version := gl.GoStr(gl.GetString(gl.VERSION))
 	//fmt.Println(version)
 
+	for !window.ShouldClose() {
+		// Do OpenGL stuff.
+		window.SwapBuffers()
+		glfw.PollEvents()
+	}
+
 }
