@@ -14,13 +14,11 @@ func main() {
 
 	setup := func() {
 		fmt.Println("Visual Go Triangle Example")
-		test := visualgo.Map(800, vgo.Width)
-		fmt.Println(test)
 	}
 
 	draw := func() {
 		//fmt.Println("Draw Stuff Here")
-		vgo.Triangle(vgo.Width/2, 1, vgo.Width, -1, 0, -1)
+		vgo.Triangle(vgo.Width/2, 0, vgo.Width, vgo.Height, 0, vgo.Height)
 	}
 	vgo.Init(setup, draw)
 
