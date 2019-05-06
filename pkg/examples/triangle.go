@@ -18,7 +18,8 @@ func main() {
 
 	draw := func() {
 		//fmt.Println("Draw Stuff Here")
-		vgo.Triangle(vgo.Width/2, 0, vgo.Width, vgo.Height, 0, vgo.Height)
+		//vgo.Triangle(vgo.Width/2, 0, vgo.Width, vgo.Height, 0, vgo.Height)
+		vgo.Rect(100, 100, 400, 400)
 	}
 	vgo.Init(setup, draw)
 
